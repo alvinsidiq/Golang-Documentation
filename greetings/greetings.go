@@ -4,7 +4,7 @@ import
     "errors"
     "fmt"
     "math/rand"
-    "time"
+    
 
 )
 
@@ -15,10 +15,28 @@ func Hello(name string) (string, error) {
 		return "", errors.New("empty name")
 	}
 
-	rand.Seed(time.Now().UnixNano())
+	
 	message := fmt.Sprintf(randomFormat(), name)
     return message, nil
 }
+
+
+// Hellos returns a map of greeting messages for a list of names. 
+func Hellos(names [] string) (map[string]string,error){
+	// A map to associate names with messages. 
+	messages := make(map[string]string)
+
+	// Loop through the list of names. 
+	for _, name := range names{
+		message, err := Hello(name)
+		if err != nil {
+			return nil , err
+		}
+		messages[name]=message
+	}
+	return messages,nil
+}
+
 
 func randomFormat() string {
 	formats := [] string{
